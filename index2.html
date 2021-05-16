@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>旋转接龙</title>
+  <style>
+    html,body{
+      height: 100%;
+      /* border:1px solid red; */
+      transform-style:preserve-3d;/*子元素将保留其 3D 位置*/
+    }
+    .line{
+      background-color: #bfa;
+      width: 100%;
+      height: 40px;
+      position:absolute;
+      top:50%;
+      /* margin-bottom: -40px; */
+    }
+    .circle{
+      width: 40px;
+      height: 40px;
+      background-color: red;
+      border-radius: 50%;
+      position:absolute;
+      top:50%;
+      z-index: 1;
+      transform-origin:center center -70px;
+    }
+    .circle:nth-child(1){
+      animation: rotate1 2s -0.2s infinite;
+    }
+    @keyframes rotate1{
+      0%{
+        transform:translateX(0px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(0px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(2){
+      animation: rotate2 2s -0.4s infinite;
+    }
+    @keyframes rotate2{
+      0%{
+        transform:translateX(50px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(50px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(3){
+      animation: rotate3 2s -0.6s infinite;
+    }
+    @keyframes rotate3{
+      0%{
+        transform:translateX(100px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(100px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(4){
+      animation: rotate4 2s -0.8s infinite;
+    }
+    @keyframes rotate4{
+      0%{
+        transform:translateX(150px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(150px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(5){
+      animation: rotate5 2s -1s infinite;
+    }
+    @keyframes rotate5{
+      0%{
+        transform:translateX(200px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(200px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(6){
+      animation: rotate6 2s -1.2s infinite;
+    }
+    @keyframes rotate6{
+      0%{
+        transform:translateX(250px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(250px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(7){
+      animation: rotate7 2s -1.4s infinite;
+    }
+    @keyframes rotate7{
+      0%{
+        transform:translateX(300px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(300px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(8){
+      animation: rotate8 2s -1.6s infinite;
+    }
+    @keyframes rotate8{
+      0%{
+        transform:translateX(350px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(350px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(9){
+      animation: rotate9 2s -1.8s infinite;
+    }
+    @keyframes rotate9{
+      0%{
+        transform:translateX(400px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(400px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(10){
+      animation: rotate10 2s -2s infinite;
+    }
+    @keyframes rotate10{
+      0%{
+        transform:translateX(450px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(450px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(11){
+      animation: rotate11 2s -2.2s infinite;
+    }
+    @keyframes rotate11{
+      0%{
+        transform:translateX(500px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(500px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(12){
+      animation: rotate12 2s -2.4s infinite;
+    }
+    @keyframes rotate12{
+      0%{
+        transform:translateX(550px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(550px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(13){
+      animation: rotate13 2s -2.6s infinite;
+    }
+    @keyframes rotate13{
+      0%{
+        transform:translateX(600px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(600px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(14){
+      animation: rotate14 2s -2.8s infinite;
+    }
+    @keyframes rotate14{
+      0%{
+        transform:translateX(650px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(650px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(15){
+      animation: rotate15 2s -3s infinite;
+    }
+    @keyframes rotate15{
+      0%{
+        transform:translateX(700px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(700px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(16){
+      animation: rotate16 2s -3.2s infinite;
+    }
+    @keyframes rotate16{
+      0%{
+        transform:translateX(750px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(750px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(17){
+      animation: rotate17 2s -3.4s infinite;
+    }
+    @keyframes rotate17{
+      0%{
+        transform:translateX(800px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(800px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(18){
+      animation: rotate18 2s -3.6s infinite;
+    }
+    @keyframes rotate18{
+      0%{
+        transform:translateX(850px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(850px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(19){
+      animation: rotate19 2s -3.8s infinite;
+    }
+    @keyframes rotate19{
+      0%{
+        transform:translateX(900px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(900px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(20){
+      animation: rotate20 2s -4s infinite;
+    }
+    @keyframes rotate20{
+      0%{
+        transform:translateX(950px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(950px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(21){
+      animation: rotate21 2s -4.2s infinite;
+    }
+    @keyframes rotate21{
+      0%{
+        transform:translateX(1000px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1000px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(22){
+      animation: rotate22 2s -4.4s infinite;
+    }
+    @keyframes rotate22{
+      0%{
+        transform:translateX(1050px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1050px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(23){
+      animation: rotate23 2s -4.6s infinite;
+    }
+    @keyframes rotate23{
+      0%{
+        transform:translateX(1100px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1100px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(24){
+      animation: rotate24 2s -4.8s infinite;
+    }
+    @keyframes rotate24{
+      0%{
+        transform:translateX(1150px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1150px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(25){
+      animation: rotate25 2s -5s infinite;
+    }
+    @keyframes rotate25{
+      0%{
+        transform:translateX(1200px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1200px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(26){
+      animation: rotate26 2s -5.2s infinite;
+    }
+    @keyframes rotate26{
+      0%{
+        transform:translateX(1250px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1250px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(27){
+      animation: rotate27 2s -5.4s infinite;
+    }
+    @keyframes rotate27{
+      0%{
+        transform:translateX(1300px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1300px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(28){
+      animation: rotate28 2s -5.6s infinite;
+    }
+    @keyframes rotate28{
+      0%{
+        transform:translateX(1350px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1350px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(29){
+      animation: rotate29 2s -5.8s infinite;
+    }
+    @keyframes rotate29{
+      0%{
+        transform:translateX(1400px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1400px) translateZ(70px) rotateX(360deg);
+      }
+    }
+    .circle:nth-child(30){
+      animation: rotate30 2s -6s infinite;
+    }
+    @keyframes rotate30{
+      0%{
+        transform:translateX(1450px) translateZ(70px) rotateX(0deg);
+      }
+      100%{
+        transform:translateX(1450px) translateZ(70px) rotateX(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="line"></div>
+</body>
+</html>
