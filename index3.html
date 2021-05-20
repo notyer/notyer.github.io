@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>HTML5 Canvas火焰跟随鼠标动画</title>
+        <!--样式添加兼容性前缀-->
+    <script src="js/prefixfree.min.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        #fire{
+            /*border: 1px red solid;*/
+        }
+    </style>
+</head>
+<body>
+<!--<a href="index2.html" download="w3cschool">下载</a>-->
+    <canvas id="fire"></canvas>
+    <script type="text/javascript">
+      var Fire = function(){
+          //初始化
+          this.canvas = document.getElementById('fire')
+          //创建2d画布
+          this.ctx = this.canvas.getContext('2d')
+          //设置canvas的宽度和高度
+          this.canvas.height = innerHeight
+          this.canvas.width = innerWidth
+          //初始化鼠标位置
+          this.mouse = {
+              x : this.canvas.width * .5,
+              y : this.canvas.height * .75
+          }
+
+          //把火焰放到数组里面运行
+          this.aFlame = []
+
+          //初始化调用
+          this.init()
+      }
+      //初始化函数
+      Fire.prototype.init = function(){
+          //绑定鼠标移动事件
+          this.canvas.addEventListener('mousemove',this.updateMouse.bind(this),false)
+      }
+      //获取鼠标的位置坐标
+      Fire.prototype.updateMouse = function(e){
+          this.mouse.x = e.clientX
+          this.mouse.y = e.clientY
+          //清除canvas
+          // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+      }
+      //定义运行程序方法
+      Fire.prototype.run = function(){
+          this.aFlame.push(new Flame(this.mouse))
+          // this.aFlame = new Flame(this.mouse)
+          console.log(this.aFlame)
+
+          this.draw()
+          for (var i = this.aFlame.length -1; i >=0  ; i--) {
+              if(this.aFlame[i].alive){
+                  this.aFlame[i].update()
+                  this.aFlame[i].draw(this.ctx)
+              }else{
+                  this.aFlame.splice(i,1)
+              }
+
+          }
+
+          // this.aFlame.draw(this.ctx)
+          requestAnimationFrame(this.run.bind(this))//回调函数执行每秒60次
+      }
+      //画火焰背景图
+      Fire.prototype.draw = function(){
+        //绘制背景
+        //指定渲染方式
+          this.ctx.globalCompositeOperation = "source-over"
+        //设置填充颜色
+          this.ctx.fillStyle = 'rgba(15,5,2,1)'
+          this.ctx.fillRect(0,0,innerWidth,innerHeight)
+
+        //绘制火焰背景图
+          //设置渲染方式
+          this.grd = this.ctx.createRadialGradient(this.mouse.x,this.mouse.y - 200,200,this.mouse.x,this.mouse.y - 100,0)
+          this.grd.addColorStop(0,'rgb(15,5,2)')
+          this.grd.addColorStop(1,"rgb(30,10,2)")
+
+          //创建一个新的路径，避免连续绘制
+          this.ctx.beginPath()
+          this.ctx.fillStyle = this.grd
+          /**
+           * 需要注意的是，三角函数 sin()、cos()、tan()、asin()、acos()、atan() 和 atan2() 返回的值是弧度而非角度。
+
+           若要转换，弧度除以 (Math.PI / 180) 即可转换为角度，同理，角度乘以这个数则能转换为弧度。
+           */
+          this.ctx.arc(this.mouse.x,this.mouse.y - 100,200,0,2*Math.PI)
+          this.ctx.fill()
+
+
+      }
+      /**
+       * 创建生成随机数的算法
+       * @param min
+       * @param max
+       * @returns {*}
+       */
+      var rand = function (min,max) {return Math.random()*(max - min) + min}
+      //画火焰
+      var Flame = function(mouse){
+        this.cx = mouse.x
+        this.cy = mouse.y
+        //生成圆心坐标
+        this.x = rand(this.cx - 25,this.cx + 25)//650 - 720之间
+        this.y = rand(this.cy - 5,this.cy + 5)//240 - 260之间
+        this.r = rand(20,30)//20 - 30之间
+
+        //初始化圆心坐标增量、生命值、生存状态
+        this.vy = rand( 1, 3 );//圆心坐标y值的增量
+        this.vx = rand( -1, 1 );//圆心坐标坐标x值的增量
+        this.life = rand( 3, 6 );//设置圆的生命值
+        this.alive = true;//设置圆的生存状态，值为false时就死掉了
+
+        //定义颜色参数
+        this.c = {
+            h:Math.floor(rand(2,40)),//0 - 360
+            s:100,
+            l:rand(80,100),
+            a:0,
+            ta:rand( 0.8, 0.9 )//设置透明度的最大生命值
+        }
+      }
+      //更新火焰的生命周期、圆心坐标位置、大小、生存状态、透明度
+      Flame.prototype.update = function()
+      {
+          //更新火焰的位置和参数
+          this.y -= this.vy;
+          this.vy += 0.05;
+
+
+          this.x += this.vx;
+
+          if( this.x < this.cx )
+              this.vx += 0.1;
+          else
+              this.vx -= 0.1;
+
+
+
+
+          if(  this.r > 0 )
+              this.r -= 0.1;
+
+          if(  this.r <= 0 )
+              this.r = 0;
+
+
+
+          this.life -= 0.15;
+
+          if( this.life <= 0 ){
+
+              this.c.a -= 0.05;
+
+              if( this.c.a <= 0 )
+                  this.alive = false;
+
+          }else if( this.life > 0 && this.c.a < this.c.ta ){
+
+              this.c.a += .08;
+
+          }
+
+      }
+      Flame.prototype.draw = function(ctx){
+          // console.log("x = "+this.x,"y = "+this.y,"r = "+this.r)
+          ctx.globalCompositeOperation = "overlay"
+          //两个同心圆
+          ctx.beginPath()
+          ctx.arc(this.x,this.y,this.r * 3,0,2 * Math.PI)
+          ctx.fillStyle = "hsla("+this.c.h+", "+this.c.s+"%, "+this.c.l+"%, "+(this.c.a/20)+")"
+          ctx.fill()
+          // ctx.strokeStyle = "red"
+          // ctx.stroke()
+          ctx.closePath()
+
+          ctx.beginPath()
+          ctx.arc(this.x,this.y,this.r,0,2 * Math.PI)
+          //设置填充样式
+          ctx.fillStyle = "hsla("+this.c.h+", "+this.c.s+"%, "+this.c.l+"%, "+this.c.a+")"
+          ctx.fill()
+          // ctx.strokeStyle = "#bfa"
+          // ctx.stroke()//描边绘制
+          ctx.closePath()
+
+
+      }
+      var oCanvas
+      var init = function(){
+          oCanvas = new Fire()
+          oCanvas.run()
+      }
+      window.onload = init
+    </script>
+</body>
+</html>
